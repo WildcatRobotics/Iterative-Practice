@@ -27,10 +27,10 @@ public class Robot extends IterativeRobot {
 	OI oi;
 	
     public void robotInit() {
-    	leftFront = new VictorSP(0);
-    	leftRear = new VictorSP(1);
-    	rightFront = new VictorSP(2);
-    	rightRear = new VictorSP(3);
+    	leftFront = new VictorSP(RobotMap.KleftFront);
+    	leftRear = new VictorSP(RobotMap.KleftRear);
+    	rightFront = new VictorSP(RobotMap.KrightFront);
+    	rightRear = new VictorSP(RobotMap.KrightRear);
     	
     	drive = new RobotDrive(leftFront, leftRear, rightFront, rightRear);
     	
@@ -50,16 +50,14 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     	SmartDashboard.putDouble("Joystick", oi.joy.getRawAxis(1));
     	SmartDashboard.putData("Motor", leftFront);
-    	leftFront.set(oi.joy.getRawAxis(1));
-    	if(oi.X.get()){
-    		leftFront.set(1);
-    	}
-    	if(oi.B.get()){
-    		leftFront.set(-1);
-    	}
     	
-    	//drive.setMaxOutput(.5);
-        //drive.tankDrive(oi.joy.getRawAxis(1), oi.joy.getRawAxis(3));
+    	if(oi.LB.get() && oi.RB.get()){
+    		drive.setMaxOutput(.75);
+    	}
+    	else
+    		drive.setMaxOutput(.5);
+    	
+    	drive.arcadeDrive(oi.joy.getRawAxis(1), oi.joy.getRawAxis(5));
     }
     
     /**

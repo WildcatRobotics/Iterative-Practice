@@ -6,10 +6,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI {
 	
 	Joystick joy;
-	JoystickButton X;
-	JoystickButton A;
-	JoystickButton B;
-	JoystickButton Y;
+	JoystickButton X, A, B, Y, LB, RB;
 	
 	public OI(){
 		joy = new Joystick(0);
@@ -17,6 +14,7 @@ public class OI {
 		A = new JoystickButton(joy, 2);
 		B = new JoystickButton(joy, 3);
 		Y = new JoystickButton(joy, 4);
-		//alex
+		LB = new JoystickButton(joy, 5);
+		RB = new JoystickButton(joy, 6);
 	}
 }
