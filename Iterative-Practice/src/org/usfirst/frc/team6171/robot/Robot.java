@@ -42,6 +42,9 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
     	leftFront.set(1);
+    	leftRear.set(1);
+    	rightFront.set(-1);    //Should cause robot to spin
+    	rightRear.set(-1);
     }
 
     /**
