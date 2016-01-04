@@ -3,6 +3,8 @@ package org.usfirst.frc.team6171.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.RobotDrive.MotorType;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -34,6 +36,8 @@ public class Robot extends IterativeRobot {
     	rightRear = new VictorSP(RobotMap.KrightRear);
     	
     	drive = new RobotDrive(leftFront, leftRear, rightFront, rightRear);
+    	drive.setInvertedMotor(MotorType.kRearLeft, true);
+    	drive.setInvertedMotor(MotorType.kFrontLeft, true);
     	
     	oi = new OI();
     	
@@ -47,12 +51,14 @@ public class Robot extends IterativeRobot {
     
     /**
      * This function is called periodically during autonomous
-    */
-    public void autonomousPeriodic() {
-    	if(time.get()<2)
-    		drive.drive(.5, 0);
-    	else
-    		drive.drive(0, 0);
+    */ 
+    public void autonomousPeriodic(){
+    	if(time.get()<3)
+    		drive.drive(-0.5,0.0);
+    	else if(time.get()<3.3)
+    		drive.drive(-0.8, 1);
+    	else if(time.get()<4)
+    		drive.drive(-0.4, 0.0);
     }
     
 
@@ -62,7 +68,10 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     	SmartDashboard.putDouble("Joystick", oi.joy.getRawAxis(1));
     	SmartDashboard.putData("Motor", leftFront);
-    	
+    	SmartDashboard.putData("Motor", leftRear);
+    	SmartDashboard.putData("Motor", rightFront);
+    	SmartDashboard.putData("Motor", rightRear);
+
     	/*boolean boost = false;
     	boolean boosted = false;
     	if(boost && !oi.A.get())
@@ -84,8 +93,8 @@ public class Robot extends IterativeRobot {
     	}
     	else
     		drive.setMaxOutput(.5);
-    	
-    	drive.arcadeDrive(oi.joy.getRawAxis(oi.LEFTY), oi.joy.getRawAxis(oi.RIGHTX));
+    
+    	drive.arcadeDrive(oi.joy.getRawAxis(1), -oi.joy.getRawAxis(4));
     }
     
     /**
@@ -93,6 +102,9 @@ public class Robot extends IterativeRobot {
      */
     public void testPeriodic() {
     	LiveWindow.addActuator("LeftFront", 0, leftFront);
+    	LiveWindow.addActuator("LeftRear", 0, leftRear);
+    	LiveWindow.addActuator("RightFront", 0, rightFront);
+    	LiveWindow.addActuator("RightRear", 0, rightRear);
     }
     
 }
