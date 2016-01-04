@@ -53,12 +53,12 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
     */ 
     public void autonomousPeriodic(){
-    	if(time.get()<3)
-    		drive.drive(-0.5,0.0);
-    	else if(time.get()<3.3)
-    		drive.drive(-0.8, 1);
-    	else if(time.get()<4)
-    		drive.drive(-0.4, 0.0);
+    	if(time.get()<2.8)
+    		drive.drive(-0.6,-0.003);
+    	else if(time.get()<6.0)
+    		drive.drive(-0.3, .5);
+    	else if(time.get()<8.0)
+    		drive.drive(-0.6, -0.003);
     }
     
 
@@ -89,12 +89,12 @@ public class Robot extends IterativeRobot {
     		boost = true;*/
     	
     	if(oi.LB.get() && oi.RB.get()){
-    		drive.setMaxOutput(.75);
+    		drive.setMaxOutput(1);
     	}
     	else
     		drive.setMaxOutput(.5);
     
-    	drive.arcadeDrive(oi.joy.getRawAxis(1), -oi.joy.getRawAxis(4));
+    	drive.arcadeDrive(oi.joy.getRawAxis(1), -oi.joy.getRawAxis(4)+0.1);
     }
     
     /**
