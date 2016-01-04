@@ -69,7 +69,7 @@ public class Robot extends IterativeRobot {
     	else
     		drive.setMaxOutput(.5);
     	
-    	drive.arcadeDrive(oi.joy.getRawAxis(1), oi.joy.getRawAxis(5));
+    	drive.arcadeDrive(oi.joy.getRawAxis(oi.LEFTY), oi.joy.getRawAxis(oi.RIGHTX));
     }
     
     /**
