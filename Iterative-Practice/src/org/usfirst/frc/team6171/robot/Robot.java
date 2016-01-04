@@ -35,6 +35,7 @@ public class Robot extends IterativeRobot {
 	ArrayList<Double> repL, repR;
 	
 	int replayCounter;
+	int isReplay;
 	
     public void robotInit() {
     	leftFront = new VictorSP(RobotMap.KleftFront);
@@ -56,7 +57,7 @@ public class Robot extends IterativeRobot {
     }
     
     public void autonomousInit(){
-    	int replay = JOptionPane.showOptionDialog(null, "Would you like to replay?", "Replay Chooser", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
+    	isReplay = JOptionPane.showOptionDialog(null, "Would you like to replay?", "Replay Chooser", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
     	time.reset();
     	time.start();
     }
