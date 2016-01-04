@@ -24,6 +24,7 @@ public class Robot extends IterativeRobot {
 	VictorSP leftFront, leftRear, rightFront, rightRear;
 	RobotDrive drive;
 	
+	Timer time;
 	OI oi;
 	
     public void robotInit() {
@@ -35,17 +36,25 @@ public class Robot extends IterativeRobot {
     	drive = new RobotDrive(leftFront, leftRear, rightFront, rightRear);
     	
     	oi = new OI();
+    	
+    	time = new Timer();
     }
-
+    
+    public void autonomousInit(){
+    	time.reset();
+    	time.start();
+    }
+    
     /**
      * This function is called periodically during autonomous
-     */
+    */
     public void autonomousPeriodic() {
-    	leftFront.set(1);
-    	leftRear.set(1);
-    	rightFront.set(-1);    //Should cause robot to spin
-    	rightRear.set(-1);
+    	if(time.get()<2)
+    		drive.drive(.5, 0);
+    	else
+    		drive.drive(0, 0);
     }
+    
 
     /**
      * This function is called periodically during operator control
