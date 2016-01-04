@@ -1,10 +1,13 @@
 
 package org.usfirst.frc.team6171.robot;
 
+import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.RobotDrive.MotorType;
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
@@ -29,6 +32,10 @@ public class Robot extends IterativeRobot {
 	Timer time;
 	OI oi;
 	
+	ArrayList<Double> repL, repR;
+	
+	int replayCounter;
+	
     public void robotInit() {
     	leftFront = new VictorSP(RobotMap.KleftFront);
     	leftRear = new VictorSP(RobotMap.KleftRear);
@@ -42,9 +49,14 @@ public class Robot extends IterativeRobot {
     	oi = new OI();
     	
     	time = new Timer();
+    	
+    	repL = new ArrayList<Double>();
+    	repR = new ArrayList<Double>();
+    	replayCounter = 0;
     }
     
     public void autonomousInit(){
+    	int replay = JOptionPane.showOptionDialog(null, "Would you like to replay?", "Replay Chooser", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
     	time.reset();
     	time.start();
     }
@@ -53,15 +65,16 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
     */ 
     public void autonomousPeriodic(){
-    	if(time.get()<2.8)
-    		drive.drive(-0.6,-0.003);
-    	else if(time.get()<6.0)
-    		drive.drive(-0.3, .5);
-    	else if(time.get()<8.0)
-    		drive.drive(-0.6, -0.003);
+    	drive.arcadeDrive(repL.get(replayCounter), repR.get(replayCounter));
+    	replayCounter++;
     }
     
 
+    public void teleopInit(){
+    	repR.clear();
+    	repL.clear();
+    }
+    
     /**
      * This function is called periodically during operator control
      */
@@ -93,8 +106,13 @@ public class Robot extends IterativeRobot {
     	}
     	else
     		drive.setMaxOutput(.5);
-    
-    	drive.arcadeDrive(oi.joy.getRawAxis(1), -oi.joy.getRawAxis(4)+0.1);
+    	
+    	Double l = oi.joy.getRawAxis(1);
+    	Double r = oi.joy.getRawAxis(4);
+    	
+    	drive.arcadeDrive(l, r);
+    	repL.add(l);
+    	repR.add(r);
     }
     
     /**
