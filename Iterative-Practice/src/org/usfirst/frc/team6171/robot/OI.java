@@ -4,13 +4,16 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 public class OI {
-	
-	public static final int LEFTX = 0;
+	public enum Analogs
+	{
+		LEFTX,LEFTY,LTRIGGER,RTRIGGER, RIGHTY, RIGHTX;
+	}
+	/*public static final int LEFTX = 0;
 	public static final int LEFTY = 1;
 	public static final int RTRIGGER = 3;
 	public static final int LTRIGGER = 2;
 	public static final int RIGHTX = 5;
-	public static final int RIGHTY = 4;
+	public static final int RIGHTY = 4;*/
 	
 	Joystick joy;
 	JoystickButton X, A, B, Y, LB, RB;
