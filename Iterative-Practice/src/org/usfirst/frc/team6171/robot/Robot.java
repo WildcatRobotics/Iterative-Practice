@@ -63,6 +63,22 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putDouble("Joystick", oi.joy.getRawAxis(1));
     	SmartDashboard.putData("Motor", leftFront);
     	
+    	/*boolean boost = false;
+    	boolean boosted = false;
+    	if(boost && !oi.A.get())
+    	{
+    		boost = true;
+    		boosted = !boosted;
+    		if(boosted)
+    		{
+    			drive.setMaxOutput(.75);
+    		}
+    		else
+    			drive.setMaxOutput(.5);
+    	}
+    	if(oi.A.get())
+    		boost = true;*/
+    	
     	if(oi.LB.get() && oi.RB.get()){
     		drive.setMaxOutput(.75);
     	}
