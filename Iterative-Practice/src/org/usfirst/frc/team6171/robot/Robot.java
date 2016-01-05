@@ -32,6 +32,8 @@ public class Robot extends IterativeRobot {
 	Timer time;
 	OI oi;
 	
+	boolean mode; // used to see if mode button is clicked
+	
 	ArrayList<Double> repL, repR;
 	
 	int replayCounter;
@@ -74,6 +76,7 @@ public class Robot extends IterativeRobot {
     public void teleopInit(){
     	repR.clear();
     	repL.clear();
+    	mode = false;
     }
     
     /**
@@ -85,6 +88,7 @@ public class Robot extends IterativeRobot {
     	SmartDashboard.putData("Motor", leftRear);
     	SmartDashboard.putData("Motor", rightFront);
     	SmartDashboard.putData("Motor", rightRear);
+    	Double l, r;
 
     	/*boolean boost = false;
     	boolean boosted = false;
@@ -102,19 +106,31 @@ public class Robot extends IterativeRobot {
     	if(oi.A.get())
     		boost = true;*/
     	
-    	if(oi.LB.get() && oi.RB.get()){
-    		drive.setMaxOutput(1);
+		if(oi.LB.get() && oi.RB.get())
+			drive.setMaxOutput(1);
+		else
+			drive.setMaxOutput(.5);
+    	
+    	//Following code uses mode button to change from driving modes
+    	if(mode = true)
+    	{
+    		l = oi.joy.getRawAxis(1); // Need to recalibrate this number
+    		r = oi.joy.getRawAxis(4); // Need to recalibrate this number
+    		   	
+    		drive.tankDrive(l, r);
+    		repL.add(l);
+    		repR.add(r);
     	}
     	else
-    		drive.setMaxOutput(.5);
-    	
-    	Double l = oi.joy.getRawAxis(1);
-    	Double r = oi.joy.getRawAxis(4);
-    	
-    	drive.arcadeDrive(l, r);
-    	repL.add(l);
-    	repR.add(r);
-    }
+    	{
+    		l = oi.joy.getRawAxis(1);
+    		r = oi.joy.getRawAxis(4);
+    		   	
+    		drive.arcadeDrive(l, r);
+    		repL.add(l);
+    		repR.add(r);
+    	}
+  }
     
     /**
      * This function is called periodically during test mode

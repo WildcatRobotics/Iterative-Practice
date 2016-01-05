@@ -12,7 +12,7 @@ public class OI {
 	public static final int RIGHTY = 1;
 	
 	Joystick joy;
-	JoystickButton X, A, B, Y, LB, RB;
+	JoystickButton X, A, B, Y, LB, RB, mode;
 	
 	public OI(){
 		joy = new Joystick(0);
@@ -23,8 +23,9 @@ public class OI {
 		Y = new JoystickButton(joy, 4);
 		LB = new JoystickButton(joy, 5);
 		RB = new JoystickButton(joy, 6);
-		//test
-		//change
-		//tester2
+		mode = new JoystickButton(joy, 0); //need to calibrate to correct button. 
+		
+				
+		
 	}
 }
