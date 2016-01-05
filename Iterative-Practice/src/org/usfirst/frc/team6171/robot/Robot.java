@@ -126,8 +126,8 @@ public class Robot extends IterativeRobot {
 		
 		if(tankDrive = true)
     	{
-    		l = oi.joy.getRawAxis(1); // Need to recalibrate this number
-    		r = oi.joy.getRawAxis(4); // Need to recalibrate this number
+    		l = oi.joy.getRawAxis(OI.LEFTY); // value added
+    		r = oi.joy.getRawAxis(OI.RIGHTY); // value added
     		   	
     		drive.tankDrive(l, r);
     		repL.add(l);
@@ -135,8 +135,8 @@ public class Robot extends IterativeRobot {
     	}
     	else
     	{
-    		l = oi.joy.getRawAxis(1);
-    		r = oi.joy.getRawAxis(4);
+    		l = oi.joy.getRawAxis(OI.LEFTY); // value added
+    		r = oi.joy.getRawAxis(OI.RIGHTX); // value added 
     		   	
     		drive.arcadeDrive(l, r);
     		repL.add(l);
