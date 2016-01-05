@@ -32,10 +32,12 @@ public class Robot extends IterativeRobot {
 	Timer time;
 	OI oi;
 	
-	boolean mode; // used to see if mode button is clicked
+	boolean tankDrive; // used to see if mode button is clicked
 	
+	//these store the data from teleop for use in autonomous replay
 	ArrayList<Double> repL, repR;
 	
+	//these variables control the flow of the replay
 	int replayCounter;
 	int isReplay;
 	
@@ -62,21 +64,25 @@ public class Robot extends IterativeRobot {
     	isReplay = JOptionPane.showOptionDialog(null, "Would you like to replay?", "Replay Chooser", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null);
     	time.reset();
     	time.start();
+    	replayCounter = 0;
     }
     
     /**
      * This function is called periodically during autonomous
     */ 
     public void autonomousPeriodic(){
-    	drive.arcadeDrive(repL.get(replayCounter), repR.get(replayCounter));
-    	replayCounter++;
+    	if(isReplay == 1){
+    		drive.arcadeDrive(repL.get(replayCounter), repR.get(replayCounter));
+    		replayCounter++;
+    	}
+    	
     }
     
 
     public void teleopInit(){
     	repR.clear();
     	repL.clear();
-    	mode = false;
+    	tankDrive = false;
     }
     
     /**
@@ -112,7 +118,13 @@ public class Robot extends IterativeRobot {
 			drive.setMaxOutput(.5);
     	
     	//Following code uses mode button to change from driving modes
-    	if(mode = true)
+		//pauses thread for half a second to give user time to release button
+    	if(oi.A.get()){
+    		tankDrive = !tankDrive;
+    		Timer.delay(.5);
+    	}
+		
+		if(tankDrive = true)
     	{
     		l = oi.joy.getRawAxis(1); // Need to recalibrate this number
     		r = oi.joy.getRawAxis(4); // Need to recalibrate this number
